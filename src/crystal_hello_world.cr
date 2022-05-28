@@ -1,1 +1,1 @@
-puts "hello world v0.2.0"
+puts "hello world v0.3.0"
