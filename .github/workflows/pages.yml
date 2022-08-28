@@ -30,6 +30,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup Pages
         uses: actions/configure-pages@v2
+      - name: Install Prerequisite
+        run: apk add bash
       - name: Build docs
         run: crystal docs
       - name: Deploy docs
