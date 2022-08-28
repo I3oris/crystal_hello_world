@@ -1,53 +1,27 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+# From https://github.com/luckyframework/lucky/blob/main/.github/workflows/docs.yml
+# Thanks lucky!
+name: Deploy docs
 
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ["master"]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: write
-  pages: write
-  id-token: write
-
+    branches: [ main ]
 
 jobs:
-  # Single deploy job since we're just deploying
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    container:
-      image: crystallang/crystal
-    #  image: crystallang/crystal:latest-alpine
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Build docs
-        run: crystal docs
-      - name: Deploy docs  
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        uses: JamesIves/github-pages-deploy-action@v4
+      - uses: actions/checkout@v2
         with:
-          folder: docs
-          
-      #- name: Setup Pages
-      #  uses: actions/configure-pages@v2
-      # - name: Install Prerequisite
-      #  run: apt-get install crystal
-   #     id: deployment
-      
-     #   uses: actions/upload-pages-artifact@v1
-     #   with:
-     #     # Upload entire repository
-     #     path: './docs'
-     # - name: Deploy to GitHub Pages
-     #   id: deployment
-  #      uses: actions/deploy-pages@v1
-          
+          persist-credentials: false
+      - uses: crystal-lang/install-crystal@v1
+        with:
+          crystal: latest
+      - name: "Install shards"
+        run: shards install
+      - name: "Generate docs"
+        run: crystal docs
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
