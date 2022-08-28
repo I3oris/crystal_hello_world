@@ -23,15 +23,15 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    container:
-      image: crystallang/crystal:latest-alpine
+    #container:
+    #  image: crystallang/crystal:latest-alpine
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Install Prerequisite
-        run: apk add bash
+        run: apt-get install crystal
       - name: Build docs
         run: crystal docs
       - name: Deploy docs
