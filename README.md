@@ -1,5 +1,8 @@
 # crystal_hello_world
 
+[![GitHub release](https://img.shields.io/github/release/I3oris/crystal_hello_world.svg)](https://github.com/I3oris/crystal_hello_world/releases)
+
+
 TODO: Write a description here
 
 ## Installation
